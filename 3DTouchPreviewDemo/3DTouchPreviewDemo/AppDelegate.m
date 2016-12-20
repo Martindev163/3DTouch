@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "ViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -16,8 +18,32 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    self.window.frame = [[UIScreen mainScreen] bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    ViewController *rootVC = [[ViewController alloc] init];
+    UINavigationController *rootNav = [[UINavigationController alloc] initWithRootViewController:rootVC];
+    self.window.rootViewController = rootNav;
+    [self.window makeKeyAndVisible];
+    
+    
+    //创建应用图标上的3d touch快捷选项
+    [self createShortcutItem];
+    
+    
     return YES;
+}
+//创建应用图标上的3d touch快捷选项
+-(void)createShortcutItem
+{
+    //创建系统风格的Icon
+    UIApplicationShortcutIcon *icon = [UIApplicationShortcutIcon iconWithType:UIApplicationShortcutIconTypeShare];
+    //创建自定义图标的Icon
+//    UIApplicationShortcutIcon *icon2 = [UIApplicationShortcutIcon iconWithTemplateImageName:@"someIcon.png"];
+    //创建快捷选项
+    UIApplicationShortcutItem *item = [[UIApplicationShortcutItem alloc] initWithType:@"theOnlySignOne" localizedTitle:@"分享" localizedSubtitle:@"动态标签（副标题）" icon:icon userInfo:nil];
+    //添加到快捷选项数组
+    [UIApplication sharedApplication].shortcutItems = @[item];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
